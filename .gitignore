@@ -6,3 +6,4 @@ coverage
 vendor
 tmp
 lib/**/*.bundle
+*.html

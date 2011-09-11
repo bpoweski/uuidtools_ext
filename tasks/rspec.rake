@@ -1,7 +1,7 @@
 RSpec::Core::RakeTask.new
 
 namespace :spec do
-  RSpec::Core::RakeTask.new(:cov) do |task|
+  RSpec::Core::RakeTask.new(:rcov) do |task|
     if RUBY_VERSION < "1.9"
       task.rcov      = true
       task.rcov_opts = "--failure-threshold 80 --exclude test/*,spec/*,features/*,gems/*"

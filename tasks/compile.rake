@@ -5,5 +5,3 @@ Rake::ExtensionTask.new('uuidtools') do |ext|
 
   CLEAN.include "#{ext.lib_dir}/*.#{RbConfig::CONFIG['DLEXT']}"
 end
-
-Rake::Task[:spec].prerequisites << :compile

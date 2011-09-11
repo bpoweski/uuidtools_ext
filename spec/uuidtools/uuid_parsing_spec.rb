@@ -124,4 +124,15 @@ describe UUIDTools::UUID, "when parsing" do
     uuid = UUIDTools::UUID.timestamp_create
     UUIDTools::UUID.parse_hexdigest(uuid.hexdigest).should == uuid
   end
+
+  it "should parse capitalized letters the same" do
+    UUIDTools::UUID.parse("6BA7B810-9DAD-11D1-80B4-00C04FD430C8").to_s.should ==
+      "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+  end
+
+  it "should raise an error if the string is not a valid uuid" do
+    expect {
+      UUIDTools::UUID.parse("asdfdasdfdfd0000000000000000000000000000000000000000000000000000000000000000")
+    }.to raise_error(ArgumentError)
+  end
 end

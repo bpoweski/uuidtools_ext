@@ -90,29 +90,6 @@ module UUIDTools
     attr_accessor :clock_seq_low
     attr_accessor :nodes
 
-    # Parses a UUID from a string.
-    def self.parse(uuid_string)
-      unless uuid_string.kind_of? String
-        raise TypeError,
-          "Expected String, got #{uuid_string.class.name} instead."
-      end
-      uuid_components = uuid_string.downcase.scan(
-        Regexp.new("^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-" +
-          "([0-9a-f]{2})([0-9a-f]{2})-([0-9a-f]{12})$")).first
-      raise ArgumentError, "Invalid UUID format." if uuid_components.nil?
-      time_low = uuid_components[0].to_i(16)
-      time_mid = uuid_components[1].to_i(16)
-      time_hi_and_version = uuid_components[2].to_i(16)
-      clock_seq_hi_and_reserved = uuid_components[3].to_i(16)
-      clock_seq_low = uuid_components[4].to_i(16)
-      nodes = []
-      for i in 0..5
-        nodes << uuid_components[5][(i * 2)..(i * 2) + 1].to_i(16)
-      end
-      return self.new(time_low, time_mid, time_hi_and_version,
-        clock_seq_hi_and_reserved, clock_seq_low, nodes)
-    end
-
     # Parses a UUID from a raw byte string.
     def self.parse_raw(raw_string)
       unless raw_string.kind_of? String
