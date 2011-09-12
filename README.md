@@ -21,8 +21,8 @@ uuidtools_ext
 ```bash
 
 $ bundle exec rake benchmark
-16134.5758441284 version 1 per second.
-22674.4506006888 version 3 per second.
-10435.7337015681 version 4 per second.
-21516.6662562688 version 5 per second.
+24152.7791534126 version 1 per second.
+31492.1969733942 version 3 per second.
+12198.6768565061 version 4 per second.
+35412.1236784738 version 5 per second.
 ```

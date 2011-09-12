@@ -4,6 +4,42 @@
 VALUE mUUIDTools = Qnil;
 VALUE cUUID = Qnil;
 
+/*
+def generate_s
+  result = sprintf("%8.8x-%4.4x-%4.4x-%2.2x%2.2x-", @time_low, @time_mid,
+    @time_hi_and_version, @clock_seq_hi_and_reserved, @clock_seq_low);
+  for i in 0..5
+    result << sprintf("%2.2x", @nodes[i])
+  end
+  return result.downcase
+end
+*/
+
+static VALUE rb_uuidtools_uuid_generate_s(VALUE self)
+{
+
+  VALUE time_low = rb_iv_get(self, "@time_low");
+  VALUE time_mid = rb_iv_get(self, "@time_mid");
+  VALUE time_hi_and_version = rb_iv_get(self, "@time_hi_and_version");
+  VALUE clock_seq_hi_and_reserved = rb_iv_get(self, "@clock_seq_hi_and_reserved");
+  VALUE clock_seq_low = rb_iv_get(self, "@clock_seq_low");
+  VALUE nodes = rb_iv_get(self, "@nodes");
+
+  char uuid[37];
+  sprintf(uuid, "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-", NUM2ULONG(time_low), NUM2ULONG(time_mid),
+    NUM2ULONG(time_hi_and_version), NUM2ULONG(clock_seq_hi_and_reserved), NUM2ULONG(clock_seq_low));
+
+  struct RArray *nodes_array = RARRAY(nodes);
+
+  size_t i;
+  for(i = 0; i < nodes_array->len; i++)
+  {
+    sprintf(uuid + 24 + (i*2), "%2.2x", NUM2ULONG(nodes_array->ptr[i]));
+  }
+
+  return rb_str_new2(uuid);
+}
+
 static VALUE rb_uuidtools_uuid_parse(VALUE mod, VALUE uuid_string)
 {
   const char *separators = "-";
@@ -68,4 +104,5 @@ void Init_uuidtools() {
   cUUID = rb_define_class_under(mUUIDTools, "UUID", rb_cObject);
 
   rb_define_singleton_method(cUUID, "parse", rb_uuidtools_uuid_parse, 1);
+  rb_define_method(cUUID, "generate_s", rb_uuidtools_uuid_generate_s, 0);
 }

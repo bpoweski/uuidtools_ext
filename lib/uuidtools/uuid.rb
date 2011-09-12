@@ -406,16 +406,6 @@ module UUIDTools
       end)
     end
 
-    # Generates a string representation for this UUID.
-    def generate_s
-      result = sprintf("%8.8x-%4.4x-%4.4x-%2.2x%2.2x-", @time_low, @time_mid,
-        @time_hi_and_version, @clock_seq_hi_and_reserved, @clock_seq_low);
-      for i in 0..5
-        result << sprintf("%2.2x", @nodes[i])
-      end
-      return result.downcase
-    end
-
     # Generates the raw bytes that represent this UUID.
     def generate_raw
       return self.class.convert_int_to_byte_string(self.to_i, 16)
