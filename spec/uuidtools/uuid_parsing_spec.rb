@@ -143,4 +143,18 @@ describe UUIDTools::UUID, "when parsing" do
   it "should parse raw with a character strign" do
     UUIDTools::UUID.parse_raw("foo").to_s.should == "00000000-0000-0000-0000-000000666f6f"
   end
+
+  describe ".convert_byte_string_to_int" do
+    it "returns an Integer with small values" do
+      value = described_class.convert_byte_string_to_int("1")
+      value.should be_a_kind_of(Integer)
+      value.should == 49
+    end
+
+    it "returns a Bignum with large values" do
+      value = described_class.convert_byte_string_to_int("6ba7b810-9dad-11d1-80b4-00c04fd430c8")
+      value.should be_a_kind_of(Bignum)
+      value.should == 105650679877645322908966597104845053545234508911669713823561288000003997571566663656248
+    end
+  end
 end
