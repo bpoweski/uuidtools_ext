@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Bob Aman", "Ben Poweski"]
   s.email       = "bob@sporkmonger.com"
   s.homepage    = "http://github.com/bpoweski/uuidtools_ext"
-  s.summary     = %q{A faster version uuidtools}
+  s.summary     = %q{A faster version of uuidtools}
   s.description = %q{}
   s.extensions  = ["ext/uuidtools/extconf.rb"]
 

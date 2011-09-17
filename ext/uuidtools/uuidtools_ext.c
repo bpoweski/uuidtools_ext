@@ -26,7 +26,7 @@ static VALUE rb_uuidtools_uuid_generate_s(VALUE self)
   VALUE nodes = rb_iv_get(self, "@nodes");
 
   char uuid[37];
-  sprintf(uuid, "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-", NUM2ULONG(time_low), NUM2ULONG(time_mid),
+   sprintf(uuid, "%8.8lx-%4.4lx-%4.4lx-%2.2lx%2.2lx-", NUM2ULONG(time_low), NUM2ULONG(time_mid),
     NUM2ULONG(time_hi_and_version), NUM2ULONG(clock_seq_hi_and_reserved), NUM2ULONG(clock_seq_low));
 
   struct RArray *nodes_array = RARRAY(nodes);
@@ -34,7 +34,7 @@ static VALUE rb_uuidtools_uuid_generate_s(VALUE self)
   size_t i;
   for(i = 0; i < nodes_array->len; i++)
   {
-    sprintf(uuid + 24 + (i*2), "%2.2x", NUM2ULONG(nodes_array->ptr[i]));
+    sprintf(uuid + 24 + (i*2), "%2.2lx", NUM2ULONG(nodes_array->ptr[i]));
   }
 
   return rb_str_new2(uuid);
