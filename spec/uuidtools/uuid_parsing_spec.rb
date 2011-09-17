@@ -135,4 +135,12 @@ describe UUIDTools::UUID, "when parsing" do
       UUIDTools::UUID.parse("asdfdasdfdfd0000000000000000000000000000000000000000000000000000000000000000")
     }.to raise_error(ArgumentError)
   end
+
+  it "should parse raw with a small integer string" do
+    UUIDTools::UUID.parse_raw("1").to_s.should == "00000000-0000-0000-0000-000000000031"
+  end
+
+  it "should parse raw with a character strign" do
+    UUIDTools::UUID.parse_raw("foo").to_s.should == "00000000-0000-0000-0000-000000666f6f"
+  end
 end
